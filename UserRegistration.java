@@ -16,6 +16,10 @@ public class UserRegistration {
         return mobile.matches("^[0-9]{2} [0-9]{10}$");
     }
 
+    public boolean validatePassword(String password) {
+        return password.matches("^.{8,}$");
+    }
+
     public static void main(String[] args) {
         UserRegistration user = new UserRegistration();
 
@@ -35,6 +39,10 @@ public class UserRegistration {
         // UC4 - Mobile
         System.out.println(user.validateMobile("91 9919819801"));     // true
         System.out.println(user.validateMobile("9919819801"));        // false
-        System.out.println(user.validateMobile("91 99198"));          // false
+
+        // UC5 - Password Rule 1
+        System.out.println(user.validatePassword("password"));        // true
+        System.out.println(user.validatePassword("pass"));            // false
+        System.out.println(user.validatePassword("passwor"));         // false
     }
 }
