@@ -17,33 +17,34 @@ public class UserRegistration {
     }
 
     public boolean validatePassword(String password) {
-        return password.matches("^(?=.*[A-Z])(?=.*[0-9]).{8,}$");
+        return password.matches("^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$");
     }
 
     public static void main(String[] args) {
         UserRegistration user = new UserRegistration();
 
         // UC1 - First Name
-        System.out.println(user.validateFirstName("John"));           // true
-        System.out.println(user.validateFirstName("jo"));             // false
+        System.out.println(user.validateFirstName("John"));             // true
+        System.out.println(user.validateFirstName("jo"));               // false
 
         // UC2 - Last Name
-        System.out.println(user.validateLastName("Doe"));             // true
-        System.out.println(user.validateLastName("do"));              // false
+        System.out.println(user.validateLastName("Doe"));               // true
+        System.out.println(user.validateLastName("do"));                // false
 
         // UC3 - Email
-        System.out.println(user.validateEmail("abc@bl.co.in"));       // true
-        System.out.println(user.validateEmail("abc.xyz@bl.co.in"));   // true
-        System.out.println(user.validateEmail("abc@.co.in"));         // false
+        System.out.println(user.validateEmail("abc@bl.co.in"));         // true
+        System.out.println(user.validateEmail("abc.xyz@bl.co.in"));     // true
+        System.out.println(user.validateEmail("abc@.co.in"));           // false
 
         // UC4 - Mobile
-        System.out.println(user.validateMobile("91 9919819801"));     // true
-        System.out.println(user.validateMobile("9919819801"));        // false
+        System.out.println(user.validateMobile("91 9919819801"));       // true
+        System.out.println(user.validateMobile("9919819801"));          // false
 
-        // UC7 - Password Rule 1, 2 & 3
-        System.out.println(user.validatePassword("Password1"));       // true
-        System.out.println(user.validatePassword("Password"));        // false
-        System.out.println(user.validatePassword("password1"));       // false
-        System.out.println(user.validatePassword("Pass1"));           // false
+        // UC8 - Password All Rules
+        System.out.println(user.validatePassword("Password1@"));        // true
+        System.out.println(user.validatePassword("Password1"));         // false
+        System.out.println(user.validatePassword("password1@"));        // false
+        System.out.println(user.validatePassword("Pass1@"));            // false
+        System.out.println(user.validatePassword("Password1@@"));       // false
     }
 }
