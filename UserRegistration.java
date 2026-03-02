@@ -24,27 +24,35 @@ public class UserRegistration {
         UserRegistration user = new UserRegistration();
 
         // UC1 - First Name
-        System.out.println(user.validateFirstName("John"));             // true
-        System.out.println(user.validateFirstName("jo"));               // false
+        System.out.println(user.validateFirstName("John"));              // true
+        System.out.println(user.validateFirstName("jo"));                // false
 
         // UC2 - Last Name
-        System.out.println(user.validateLastName("Doe"));               // true
-        System.out.println(user.validateLastName("do"));                // false
-
-        // UC3 - Email
-        System.out.println(user.validateEmail("abc@bl.co.in"));         // true
-        System.out.println(user.validateEmail("abc.xyz@bl.co.in"));     // true
-        System.out.println(user.validateEmail("abc@.co.in"));           // false
+        System.out.println(user.validateLastName("Doe"));                // true
+        System.out.println(user.validateLastName("do"));                 // false
 
         // UC4 - Mobile
-        System.out.println(user.validateMobile("91 9919819801"));       // true
-        System.out.println(user.validateMobile("9919819801"));          // false
+        System.out.println(user.validateMobile("91 9919819801"));        // true
+        System.out.println(user.validateMobile("9919819801"));           // false
 
         // UC8 - Password All Rules
-        System.out.println(user.validatePassword("Password1@"));        // true
-        System.out.println(user.validatePassword("Password1"));         // false
-        System.out.println(user.validatePassword("password1@"));        // false
-        System.out.println(user.validatePassword("Pass1@"));            // false
-        System.out.println(user.validatePassword("Password1@@"));       // false
+        System.out.println(user.validatePassword("Password1@"));         // true
+        System.out.println(user.validatePassword("Password1"));          // false
+
+        // UC9 - Email Samples
+        System.out.println("--- Valid Emails ---");
+        System.out.println(user.validateEmail("abc@bl.co.in"));          // true
+        System.out.println(user.validateEmail("abc.xyz@bl.co.in"));      // true
+        System.out.println(user.validateEmail("abc@bl.co"));             // true
+        System.out.println(user.validateEmail("abc.xyz@bl.co"));         // true
+        System.out.println(user.validateEmail("abc123@bl.co.in"));       // true
+
+        System.out.println("--- Invalid Emails ---");
+        System.out.println(user.validateEmail("abc@.co.in"));            // false
+        System.out.println(user.validateEmail("abc@bl..in"));            // false
+        System.out.println(user.validateEmail("abc@bl.c"));              // false
+        System.out.println(user.validateEmail("abc.@bl.co.in"));         // false
+        System.out.println(user.validateEmail("@bl.co.in"));             // false
+        System.out.println(user.validateEmail("abc@bl@co.in"));          // false
     }
 }
