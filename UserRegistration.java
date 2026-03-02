@@ -17,7 +17,7 @@ public class UserRegistration {
     }
 
     public boolean validatePassword(String password) {
-        return password.matches("^(?=.*[A-Z]).{8,}$");
+        return password.matches("^(?=.*[A-Z])(?=.*[0-9]).{8,}$");
     }
 
     public static void main(String[] args) {
@@ -40,9 +40,10 @@ public class UserRegistration {
         System.out.println(user.validateMobile("91 9919819801"));     // true
         System.out.println(user.validateMobile("9919819801"));        // false
 
-        // UC6 - Password Rule 1 & 2
-        System.out.println(user.validatePassword("Password"));        // true
-        System.out.println(user.validatePassword("password"));        // false
-        System.out.println(user.validatePassword("Pass"));            // false
+        // UC7 - Password Rule 1, 2 & 3
+        System.out.println(user.validatePassword("Password1"));       // true
+        System.out.println(user.validatePassword("Password"));        // false
+        System.out.println(user.validatePassword("password1"));       // false
+        System.out.println(user.validatePassword("Pass1"));           // false
     }
 }
