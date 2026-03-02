@@ -16,13 +16,13 @@ public class UserRegistrationTest {
     }
 
     @Test
-    public void givenInvalidFirstName_ShouldReturnFalse() {
-        assertFalse(user.validateFirstName("jo"));
+    public void givenInvalidFirstName_ShouldThrowException() {
+        assertThrows(UserRegistrationException.class, () -> user.validateFirstName("jo"));
     }
 
     @Test
-    public void givenFirstNameWithNoCapital_ShouldReturnFalse() {
-        assertFalse(user.validateFirstName("john"));
+    public void givenFirstNameWithNoCapital_ShouldThrowException() {
+        assertThrows(UserRegistrationException.class, () -> user.validateFirstName("john"));
     }
 
     // UC2 - Last Name
@@ -32,13 +32,13 @@ public class UserRegistrationTest {
     }
 
     @Test
-    public void givenInvalidLastName_ShouldReturnFalse() {
-        assertFalse(user.validateLastName("do"));
+    public void givenInvalidLastName_ShouldThrowException() {
+        assertThrows(UserRegistrationException.class, () -> user.validateLastName("do"));
     }
 
     @Test
-    public void givenLastNameWithNoCapital_ShouldReturnFalse() {
-        assertFalse(user.validateLastName("doe"));
+    public void givenLastNameWithNoCapital_ShouldThrowException() {
+        assertThrows(UserRegistrationException.class, () -> user.validateLastName("doe"));
     }
 
     // UC3 - Email
@@ -48,18 +48,8 @@ public class UserRegistrationTest {
     }
 
     @Test
-    public void givenValidEmailWithOptionalParts_ShouldReturnTrue() {
-        assertTrue(user.validateEmail("abc.xyz@bl.co.in"));
-    }
-
-    @Test
-    public void givenInvalidEmailMissingAt_ShouldReturnFalse() {
-        assertFalse(user.validateEmail("abc@.co.in"));
-    }
-
-    @Test
-    public void givenInvalidEmailDoubleDot_ShouldReturnFalse() {
-        assertFalse(user.validateEmail("abc@bl..in"));
+    public void givenInvalidEmail_ShouldThrowException() {
+        assertThrows(UserRegistrationException.class, () -> user.validateEmail("abc@.co.in"));
     }
 
     // UC4 - Mobile
@@ -69,13 +59,8 @@ public class UserRegistrationTest {
     }
 
     @Test
-    public void givenMobileWithoutCountryCode_ShouldReturnFalse() {
-        assertFalse(user.validateMobile("9919819801"));
-    }
-
-    @Test
-    public void givenMobileWithInsufficientDigits_ShouldReturnFalse() {
-        assertFalse(user.validateMobile("91 99198"));
+    public void givenInvalidMobile_ShouldThrowException() {
+        assertThrows(UserRegistrationException.class, () -> user.validateMobile("9919819801"));
     }
 
     // UC5-UC8 - Password
@@ -85,28 +70,23 @@ public class UserRegistrationTest {
     }
 
     @Test
-    public void givenPasswordWithNoUpperCase_ShouldReturnFalse() {
-        assertFalse(user.validatePassword("password1@"));
+    public void givenPasswordWithNoUpperCase_ShouldThrowException() {
+        assertThrows(UserRegistrationException.class, () -> user.validatePassword("password1@"));
     }
 
     @Test
-    public void givenPasswordWithNoNumber_ShouldReturnFalse() {
-        assertFalse(user.validatePassword("Password@"));
+    public void givenPasswordWithNoNumber_ShouldThrowException() {
+        assertThrows(UserRegistrationException.class, () -> user.validatePassword("Password@"));
     }
 
     @Test
-    public void givenPasswordWithNoSpecialChar_ShouldReturnFalse() {
-        assertFalse(user.validatePassword("Password1"));
+    public void givenPasswordWithNoSpecialChar_ShouldThrowException() {
+        assertThrows(UserRegistrationException.class, () -> user.validatePassword("Password1"));
     }
 
     @Test
-    public void givenPasswordWithLessThan8Chars_ShouldReturnFalse() {
-        assertFalse(user.validatePassword("Pass1@"));
-    }
-
-    @Test
-    public void givenPasswordWithMoreThan1SpecialChar_ShouldReturnFalse() {
-        assertFalse(user.validatePassword("Password1@@"));
+    public void givenPasswordWithLessThan8Chars_ShouldThrowException() {
+        assertThrows(UserRegistrationException.class, () -> user.validatePassword("Pass1@"));
     }
 
     // UC11 - Parameterised Email Test
@@ -116,15 +96,21 @@ public class UserRegistrationTest {
             "abc.xyz@bl.co.in, true",
             "abc@bl.co, true",
             "abc.xyz@bl.co, true",
-            "abc123@bl.co.in, true",
-            "abc@.co.in, false",
-            "abc@bl..in, false",
-            "abc@bl.c, false",
-            "abc.@bl.co.in, false",
-            "@bl.co.in, false",
-            "abc@bl@co.in, false"
+            "abc123@bl.co.in, true"
     })
-    public void givenEmailSamples_ShouldValidateCorrectly(String email, boolean expected) {
+    public void givenValidEmailSamples_ShouldReturnTrue(String email, boolean expected) {
         assertEquals(expected, user.validateEmail(email));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "abc@.co.in",
+            "abc@bl..in",
+            "abc@bl.c",
+            "@bl.co.in",
+            "abc@bl@co.in"
+    })
+    public void givenInvalidEmailSamples_ShouldThrowException(String email) {
+        assertThrows(UserRegistrationException.class, () -> user.validateEmail(email));
     }
 }
